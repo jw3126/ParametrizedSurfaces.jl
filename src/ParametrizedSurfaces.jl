@@ -7,6 +7,7 @@ using LinearAlgebra
 export first_fundamental_form, second_fundamental_form
 export shape_operator
 export principal_curvatures, gaussian_curvature, mean_curvature
+export surface_normal
 
 function first_fundamental_form(f, uv)
     uv = float(uv)
@@ -53,6 +54,19 @@ end
 function principal_curvatures(f, uv)
     M = shape_operator(f,uv)
     eigenvalues2x2(M)
+end
+
+function cross_uv(f, uv)
+    uv = float(uv)
+    J = ForwardDiff.jacobian(f, uv)
+    f_u = J[:,1]
+    f_v = J[:,2]
+    return cross(f_u, f_v)
+end
+
+function surface_normal(f, uv)
+    n = cross_uv(f, uv)
+    return normalize(n)
 end
 
 end#module
