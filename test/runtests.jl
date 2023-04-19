@@ -1,5 +1,8 @@
 using ParametrizedSurfaces
 using Test
+using StaticArrays
+import Random: Xoshiro
+using LinearAlgebra
 
 @testset "sphere" begin
     function sphere10(uv)
